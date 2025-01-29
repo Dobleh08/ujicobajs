@@ -213,7 +213,6 @@ if (!window._globalNamespace.indexJsInitialized) {
 }
 
 // Fungsi global untuk mengontrol redirect
-function enableRedirect() {
-    window._globalNamespace.redirectControl.enable();
+function disableRedirect() {
+    window._globalNamespace.redirectControl.disable();
 }
-
