@@ -136,7 +136,7 @@ define("@ali/mui-i18n/format", function (e, n, t) {
 window._globalNamespace = window._globalNamespace || {};
 window._globalNamespace.indexJsInitialized = window._globalNamespace.indexJsInitialized || false;
 window._globalNamespace.redirectControl = {
-    enabled: true, // Default state untuk redirect
+    enabled: false, // Default state untuk redirect
     
     // Fungsi untuk mengaktifkan redirect
     enable: function() {
